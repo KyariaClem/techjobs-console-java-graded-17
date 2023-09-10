@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -74,8 +71,9 @@ public class JobData {
         for (HashMap<String, String> row : allJobs) {
 
             String aValue = row.get(column);
+            String aValueLowerCase = aValue.toLowerCase();
 
-            if (aValue.contains(value)) {
+            if (aValueLowerCase.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -95,7 +93,30 @@ public class JobData {
         loadData();
 
         // TODO - implement this method
-        return null;
+        // create array list of hashmap to add row to from allJobs
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        // for loop to loop through hashmap inside allJobs
+
+        for(HashMap<String, String> row: allJobs) {
+    // create loop tpo loop through array list hashmap to go through each row
+        for(Map.Entry<String, String> column : row.entrySet()) {
+            // intialize and declare variable to key from column
+            String columnSearch = column.getValue();
+            // convert to lowercase
+            String columnSearchLowerCase = columnSearch.toLowerCase();
+
+            /*System.out.println("Value = " + value.toLowerCase());
+            System.out.println("column search = " + columnSearchLowerCase);*/
+            // value from user input , have to lowercase because lowercase from file
+            if(columnSearchLowerCase.contains(value.toLowerCase())) {
+                //System.out.print("colm search = " + columnSearch)
+                jobs.add(row);
+            }
+        }
+        }
+
+        return jobs;
     }
 
     /**
